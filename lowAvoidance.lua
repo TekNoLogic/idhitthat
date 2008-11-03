@@ -6,7 +6,6 @@ local result = {
 	parry    = 0,
 	block    = 0,
 	critical = 0,
-	crushing = 0,
 	hit      = 0,
 }
 
@@ -31,7 +30,6 @@ local function UpdateHitTable()
 	result.parry = GetParryChance() - 0.6
 	result.block = GetBlockChance() - 0.6
 	result.critical = max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0)
-	result.crushing = max(30 - 15, 0)
 	result.hit = 0
 
 	local mainhand = GetInventoryItemLink("player", 16)
@@ -65,17 +63,12 @@ local function UpdateHitTable()
 	result.critical = min(result.critical, leftover)
 	leftover = leftover - result.critical
 
-	result.crushing = min(result.crushing, leftover)
-	leftover = leftover - result.crushing
-
 	result.hit = leftover
 
 	if result.critical > 0 then
 		dataobj.text = "|cffff0000"..L["Critable"].."|r"
-	elseif result.crushing > 0 then
-		dataobj.text =  "|cffff8000"..L["Crushable"].."|r"
 	else
-		dataobj.text = "|cff00ff00"..L["Uncrushable"].."|r"
+		dataobj.text = "|cff00ff00"..L["Uncritable"].."|r"
 	end
 end
 
@@ -134,7 +127,6 @@ function dataobj.OnEnter(self)
 	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", result.parry))
 	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", result.block))
 	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", result.critical))
-	GameTooltip:AddDoubleLine(L["Crushing"], string.format("%.2f%%", result.crushing))
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit))
 
 	GameTooltip:Show()
