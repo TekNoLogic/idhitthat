@@ -113,15 +113,12 @@ function dataobj.OnEnter(self)
 	GameTooltip:AddLine("lowAvoidance")
 	GameTooltip:AddLine(" ")
 
-	GameTooltip:AddLine(L["Defensive Combat Table vs Level"].." "..(UnitLevel("player") + 3))
-	GameTooltip:AddLine(" ")
-
-	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", result.miss))
-	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", result.dodge))
-	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", result.parry))
-	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", result.block))
-	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", result.critical))
-	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit))
+	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", result.miss), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", result.dodge), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", result.parry), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", result.block), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", result.critical), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit), nil,nil,nil, 1,1,1)
 
 	GameTooltip:Show()
 end
