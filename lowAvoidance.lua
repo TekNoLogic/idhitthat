@@ -22,8 +22,7 @@ local function UpdateHitTable()
 	local level = UnitLevel("player")
 	targetlevel = level + 3
 
-	local defbase, defbonus = UnitDefense("player")
-	local defskillmod = (defbase + defbonus - targetlevel * 5) * 0.04
+	local defskillmod = GetDodgeBlockParryChanceFromDefense() - 0.6
 
 	result.miss = max(5 + defskillmod, 0)
 	result.dodge = GetDodgeChance() - 0.6
