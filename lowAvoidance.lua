@@ -17,7 +17,9 @@ local f = CreateFrame("Frame")
 
 f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 
-local function UpdateHitTable()
+local function UpdateHitTable(self, event, unit)
+	return if event ~= "COMBAT_RATING_UPDATE" and unit ~= "player" end
+
 	local defskillmod = GetDodgeBlockParryChanceFromDefense() - 0.6
 
 	result.miss = max(5 + defskillmod, 0)
@@ -35,7 +37,7 @@ local function UpdateHitTable()
 		end
 	end
 
-	local offhand = GetInventoryItemLink("player", 17)\
+	local offhand = GetInventoryItemLink("player", 17)
 	if not offhand then result.block = 0 else
 		local _, _, _, _, _, _, _, _, offhandtype = GetItemInfo(offhand)
 		if offhandtype ~= "INVTYPE_SHIELD" then result.block = 0 end
@@ -68,9 +70,10 @@ local function UpdateHitTable()
 end
 
 function f:PLAYER_LOGIN()
-	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
-	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
+	for _,e in pairs{"UNIT_DAMAGE","PLAYER_DAMAGE_DONE_MODS", "UNIT_ATTACK_SPEED", "UNIT_RANGEDDAMAGE", "UNIT_ATTACK", "UNIT_STATS", "UNIT_RANGED_ATTACK_POWER", "COMBAT_RATING_UPDATE"} do
+		self:RegisterEvent(e)
+		self[e] = UpdateHitTable
+	end
 
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
@@ -89,12 +92,8 @@ function f:PLAYER_LOGIN()
 		self:CHARACTER_POINTS_CHANGED()
 	end
 
-	UpdateHitTable()
+	UpdateHitTable(nil, "PLAYER_LOGIN")
 end
-
-f.UNIT_INVENTORY_CHANGED = UpdateHitTable
-f.UNIT_AURA = UpdateHitTable
-f.PLAYER_TARGET_CHANGED = UpdateHitTable
 
 local function GetTipAnchor(frame)
 	local x,y = frame:GetCenter()
