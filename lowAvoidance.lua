@@ -10,7 +10,6 @@ local result = {
 }
 
 local talentedcritreduct = 0
-local targetlevel = 70
 
 local dataobj = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("lowAvoidance", {icon = "Interface\\Icons\\Ability_Defend", text = "|cffff0000"..L["Critable"].."|r"})
 
@@ -19,9 +18,6 @@ local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 
 local function UpdateHitTable()
-	local level = UnitLevel("player")
-	targetlevel = level + 3
-
 	local defskillmod = GetDodgeBlockParryChanceFromDefense() - 0.6
 
 	result.miss = max(5 + defskillmod, 0)
@@ -118,7 +114,7 @@ function dataobj.OnEnter(self)
 	GameTooltip:AddLine("lowAvoidance")
 	GameTooltip:AddLine(" ")
 
-	GameTooltip:AddLine(L["Defensive Combat Table vs Level"].." "..targetlevel)
+	GameTooltip:AddLine(L["Defensive Combat Table vs Level"].." "..(UnitLevel("player") + 3))
 	GameTooltip:AddLine(" ")
 
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", result.miss))
