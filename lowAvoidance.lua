@@ -22,18 +22,16 @@ f:SetScript("OnEvent", function(self, event, ...) if self[event] then return sel
 local function UpdateHitTable()
 	local level = UnitLevel("player");
 	targetlevel = level + 3;
-	if UnitExists("target") then targetlevel = UnitLevel("target"); end
 
 	local defbase, defbonus = UnitDefense("player");
 	local defskillmod = (defbase + defbonus - targetlevel * 5) * 0.04;
-	local leveldiff = targetlevel - level;
 
 	result.miss = max(5 + defskillmod, 0);
-	result.dodge = GetDodgeChance() - leveldiff * 0.2;
-	result.parry = GetParryChance() - leveldiff * 0.2;
-	result.block = GetBlockChance() - leveldiff * 0.2;
+	result.dodge = GetDodgeChance() - 0.6
+	result.parry = GetParryChance() - 0.6
+	result.block = GetBlockChance() - 0.6
 	result.critical = max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0);
-	result.crushing = max(10 * leveldiff - 15, 0);
+	result.crushing = max(30 - 15, 0)
 	result.hit = 0;
 
 	local mainhand = GetInventoryItemLink("player", 16);
