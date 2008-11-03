@@ -10,8 +10,8 @@ local result = {
 	hit      = 0,
 }
 
-local talentedcritreduct = 0;
-local targetlevel = 70;
+local talentedcritreduct = 0
+local targetlevel = 70
 
 local dataobj = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("lowAvoidance", {icon = "Interface\\Icons\\Ability_Defend", text = "|cffff0000"..L["Critable"].."|r"})
 
@@ -20,74 +20,74 @@ local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 
 local function UpdateHitTable()
-	local level = UnitLevel("player");
-	targetlevel = level + 3;
+	local level = UnitLevel("player")
+	targetlevel = level + 3
 
-	local defbase, defbonus = UnitDefense("player");
-	local defskillmod = (defbase + defbonus - targetlevel * 5) * 0.04;
+	local defbase, defbonus = UnitDefense("player")
+	local defskillmod = (defbase + defbonus - targetlevel * 5) * 0.04
 
-	result.miss = max(5 + defskillmod, 0);
+	result.miss = max(5 + defskillmod, 0)
 	result.dodge = GetDodgeChance() - 0.6
 	result.parry = GetParryChance() - 0.6
 	result.block = GetBlockChance() - 0.6
-	result.critical = max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0);
+	result.critical = max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0)
 	result.crushing = max(30 - 15, 0)
-	result.hit = 0;
+	result.hit = 0
 
-	local mainhand = GetInventoryItemLink("player", 16);
-	if not mainhand then result.parry = 0; else
-		local _, _, _, _, _, _, _, _, mainhandtype = GetItemInfo(mainhand);
+	local mainhand = GetInventoryItemLink("player", 16)
+	if not mainhand then result.parry = 0 else
+		local _, _, _, _, _, _, _, _, mainhandtype = GetItemInfo(mainhand)
 		if (mainhandtype ~= "INVTYPE_WEAPON") and (mainhandtype ~= "INVTYPE_WEAPONMAINHAND") and (mainhandtype ~= "INVTYPE_2HWEAPON") then
-			result.parry = 0;
+			result.parry = 0
 		end
 	end
 
-	local offhand = GetInventoryItemLink("player", 17);
-	if not offhand then result.block = 0; else
-		local _, _, _, _, _, _, _, _, offhandtype = GetItemInfo(offhand);
-		if offhandtype ~= "INVTYPE_SHIELD" then result.block = 0; end
+	local offhand = GetInventoryItemLink("player", 17)\
+	if not offhand then result.block = 0 else
+		local _, _, _, _, _, _, _, _, offhandtype = GetItemInfo(offhand)
+		if offhandtype ~= "INVTYPE_SHIELD" then result.block = 0 end
 	end
 
-	local leftover = 100;
+	local leftover = 100
 
-	result.miss = min(result.miss, leftover);
-	leftover = leftover - result.miss;
+	result.miss = min(result.miss, leftover)
+	leftover = leftover - result.miss
 
-	result.dodge = min(result.dodge, leftover);
-	leftover = leftover - result.dodge;
+	result.dodge = min(result.dodge, leftover)
+	leftover = leftover - result.dodge
 
-	result.parry = min(result.parry, leftover);
-	leftover = leftover - result.parry;
+	result.parry = min(result.parry, leftover)
+	leftover = leftover - result.parry
 
-	result.block = min(result.block, leftover);
-	leftover = leftover - result.block;
+	result.block = min(result.block, leftover)
+	leftover = leftover - result.block
 
-	result.critical = min(result.critical, leftover);
-	leftover = leftover - result.critical;
+	result.critical = min(result.critical, leftover)
+	leftover = leftover - result.critical
 
-	result.crushing = min(result.crushing, leftover);
-	leftover = leftover - result.crushing;
+	result.crushing = min(result.crushing, leftover)
+	leftover = leftover - result.crushing
 
-	result.hit = leftover;
+	result.hit = leftover
 
 	if result.critical > 0 then
-		dataobj.text = "|cffff0000"..L["Critable"].."|r";
+		dataobj.text = "|cffff0000"..L["Critable"].."|r"
 	elseif result.crushing > 0 then
-		dataobj.text =  "|cffff8000"..L["Crushable"].."|r";
+		dataobj.text =  "|cffff8000"..L["Crushable"].."|r"
 	else
-		dataobj.text = "|cff00ff00"..L["Uncrushable"].."|r";
+		dataobj.text = "|cff00ff00"..L["Uncrushable"].."|r"
 	end
 end
 
 function f:PLAYER_LOGIN()
-	self:RegisterEvent("UNIT_INVENTORY_CHANGED");
-	self:RegisterEvent("UNIT_AURA");
-	self:RegisterEvent("PLAYER_TARGET_CHANGED");
+	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
+	self:RegisterEvent("UNIT_AURA")
+	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
 
-	local _, class = UnitClass("player");
+	local _, class = UnitClass("player")
 
 	-- SoTF
 	if ( class == "DRUID" ) then
