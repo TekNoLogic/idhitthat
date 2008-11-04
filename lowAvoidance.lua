@@ -17,8 +17,9 @@ local f = CreateFrame("Frame")
 
 f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 
+local nounit = {COMBAT_RATING_UPDATE = true, CHARACTER_POINTS_CHANGED = true, PLAYER_LOGIN = true}
 local function UpdateHitTable(self, event, unit)
-	if event ~= "COMBAT_RATING_UPDATE" and unit ~= "player" then return end
+	if not nounit[event] and unit ~= "player" then return end
 
 	local defskillmod = GetDodgeBlockParryChanceFromDefense() - 0.6
 
