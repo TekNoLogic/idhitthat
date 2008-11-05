@@ -8,6 +8,8 @@
 ## X-Category: Misc
 
 ## LoadManagers: AddonLoader
+## X-LoadOn-Hooks: CharacterFrame_OnShow
+## X-LoadOn-CharacterFrame_OnShow: LoadAddOn('lowAvoidance')
 
 LibStub.lua
 CallbackHandler-1.0.lua

@@ -13,7 +13,14 @@ local talentedcritreduct = 0
 
 local dataobj = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("lowAvoidance", {icon = "Interface\\Icons\\Ability_Defend", text = "|cffff0000"..L["Critable"].."|r"})
 
-local f = CreateFrame("Frame")
+local f = CreateFrame("Button", nil, CharacterModelFrame)
+f:SetFrameStrata("DIALOG")
+f:SetPoint("BOTTOMRIGHT", -4, 25)
+f:SetWidth(26) f:SetHeight(26)
+
+local icon = f:CreateTexture(nil, "BACKGROUND")
+icon:SetAllPoints()
+icon:SetTexture("Interface\\Icons\\Ability_Warrior_DefensiveStance")
 
 f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
 
@@ -123,5 +130,8 @@ function dataobj.OnEnter(self)
 
 	GameTooltip:Show()
 end
+
+f:SetScript("OnEnter", dataobj.OnEnter)
+f:SetScript("OnLeave", dataobj.OnLeave)
 
 if IsLoggedIn() then f:PLAYER_LOGIN() else f:RegisterEvent("PLAYER_LOGIN") end
