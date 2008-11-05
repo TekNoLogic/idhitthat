@@ -11,8 +11,6 @@ local result = {
 
 local talentedcritreduct = 0
 
-local dataobj = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("lowAvoidance", {icon = "Interface\\Icons\\Ability_Defend", text = "|cffff0000"..L["Critable"].."|r"})
-
 local f = CreateFrame("Button", nil, CharacterModelFrame)
 f:SetFrameStrata("DIALOG")
 f:SetPoint("BOTTOMRIGHT", -4, 25)
@@ -69,12 +67,6 @@ local function UpdateHitTable(self, event, unit)
 	leftover = leftover - result.critical
 
 	result.hit = leftover
-
-	if result.critical > 0 then
-		dataobj.text = "|cffff0000"..L["Critable"].."|r"
-	else
-		dataobj.text = "|cff00ff00"..L["Uncritable"].."|r"
-	end
 end
 
 function f:PLAYER_LOGIN()
@@ -103,23 +95,13 @@ function f:PLAYER_LOGIN()
 	UpdateHitTable(nil, "PLAYER_LOGIN")
 end
 
-local function GetTipAnchor(frame)
-	local x,y = frame:GetCenter()
-	if not x or not y then return "TOPLEFT", "BOTTOMLEFT" end
-	local hhalf = (x > UIParent:GetWidth() * 2 / 3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
-	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
-	return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
-end
 
-function dataobj.OnLeave() GameTooltip:Hide() end
-
-function dataobj.OnEnter(self)
- 	GameTooltip:SetOwner(self, "ANCHOR_NONE")
-	GameTooltip:SetPoint(GetTipAnchor(self))
+f:SetScript("OnLeave", function() GameTooltip:Hide() end)
+f:SetScript("OnEnter", function(self)
+ 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 	GameTooltip:ClearLines()
 
-	GameTooltip:AddLine("lowAvoidance")
-	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine("Attack Table")
 
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", result.miss), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", result.dodge), nil,nil,nil, 1,1,1)
@@ -129,9 +111,7 @@ function dataobj.OnEnter(self)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit), nil,nil,nil, 1,.5,0)
 
 	GameTooltip:Show()
-end
+end)
 
-f:SetScript("OnEnter", dataobj.OnEnter)
-f:SetScript("OnLeave", dataobj.OnLeave)
 
 if IsLoggedIn() then f:PLAYER_LOGIN() else f:RegisterEvent("PLAYER_LOGIN") end
