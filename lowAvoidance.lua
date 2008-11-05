@@ -30,11 +30,11 @@ local function UpdateHitTable(self, event, unit)
 
 	local defskillmod = GetDodgeBlockParryChanceFromDefense() - 0.6
 
-	result.miss = max(5 + defskillmod, 0)
-	result.dodge = GetDodgeChance() - 0.6
-	result.parry = GetParryChance() - 0.6
-	result.block = GetBlockChance() - 0.6
-	result.critical = max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0)
+	result.miss = math.max(5 + defskillmod, 0)
+	result.dodge = math.max(0, GetDodgeChance() - 0.6)
+	result.parry = math.max(0, GetParryChance() - 0.6)
+	result.block = math.max(0, GetBlockChance() - 0.6)
+	result.critical = math.max(5 - defskillmod - talentedcritreduct - GetCombatRatingBonus(CR_CRIT_TAKEN_MELEE), 0)
 	result.hit = 0
 
 	local mainhand = GetInventoryItemLink("player", 16)
