@@ -118,8 +118,8 @@ function dataobj.OnEnter(self)
 	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", result.dodge), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", result.parry), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", result.block), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", result.critical), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", result.critical), nil,nil,nil, 1,0,0)
+	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", result.hit), nil,nil,nil, 1,.5,0)
 
 	GameTooltip:Show()
 end
