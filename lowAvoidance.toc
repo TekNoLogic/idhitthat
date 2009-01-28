@@ -14,7 +14,9 @@
 LibStub.lua
 CallbackHandler-1.0.lua
 LibDataBroker-1.1\LibDataBroker-1.1.lua
+tektip.lua
 
 lowAvoidance.lua
+melee.lua
 defense.lua
 spell.lua

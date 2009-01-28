@@ -11,10 +11,11 @@ f:SetFrameStrata("DIALOG")
 f:SetPoint("BOTTOMRIGHT", -4, 25)
 f:SetWidth(26) f:SetHeight(26)
 
-local icons, onenters = {}, {}
-function tek_register(icon, onenter)
+local icons, onenters, tips = {}, {}, {}
+function tek_register(icon, onenter, tip)
 	table.insert(onenters, onenter)
 	icons[onenter] = icon
+	if tip then tips[tip] = true end
 end
 
 
@@ -37,10 +38,12 @@ local function changetable(self, ...)
 	if tableindex > #onenters then tableindex = 1 end
 	func = onenters[tableindex]
 	f:SetNormalTexture(icons[func])
+	GameTooltip:Hide()
+	for tip in pairs(tips) do tip:Hide() end
 	func(self)
  end
 f:SetScript("OnClick", changetable)
 f:SetScript("OnMouseWheel", changetable)
-f:SetScript("OnLeave", function() GameTooltip:Hide() end)
+f:SetScript("OnLeave", function() GameTooltip:Hide() for tip in pairs(tips) do tip:Hide() end end)
 f:SetScript("OnEnter", function(self, ...) func(self, ...) end)
 f:EnableMouseWheel(true)
