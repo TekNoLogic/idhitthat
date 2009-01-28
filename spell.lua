@@ -40,7 +40,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 
 	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", crit), nil,nil,nil, .5,1,.5)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,0,0)
+	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,.5,0)
 
 	if hasHP or sfv or misv or sfv or bopv or iffv then
 		GameTooltip:AddLine(" ")

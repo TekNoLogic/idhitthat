@@ -62,12 +62,12 @@ tek_register("Interface\\Icons\\Ability_Warrior_DefensiveStance", function(self)
 
 	GameTooltip:AddLine("Defense Table", 1,1,1)
 
-	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", dodge), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", parry), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", block), nil,nil,nil, 1,1,1)
-	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", critical), nil,nil,nil, 1,0,0)
-	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,.5,0)
+	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, .5,1,.5)
+	GameTooltip:AddDoubleLine(L["Dodge"], string.format("%.2f%%", dodge), nil,nil,nil, .5,1,.5)
+	GameTooltip:AddDoubleLine(L["Parry"], string.format("%.2f%%", parry), nil,nil,nil, .5,1,.5)
+	GameTooltip:AddDoubleLine(L["Block"], string.format("%.2f%%", block), nil,nil,nil, .5,1,.5)
+	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L["Critical"], string.format("%.2f%%", critical), nil,nil,nil, 1,.5,0)
 
 	if sotf or soh then
 		GameTooltip:AddLine(" ")
