@@ -34,9 +34,11 @@ f:SetScript("OnEvent", function(self, event, addon)
 end)
 
 
-local function changetable(self, ...)
-	lowAvoidanceDBPC = lowAvoidanceDBPC + 1;
+local function changetable(self, v)
+	local diff = type(v) == "number" and v or 1
+	lowAvoidanceDBPC = lowAvoidanceDBPC + diff
 	if lowAvoidanceDBPC > #onenters then lowAvoidanceDBPC = 1 end
+	if lowAvoidanceDBPC < 1 then lowAvoidanceDBPC = #onenters end
 	func = onenters[lowAvoidanceDBPC]
 	f:SetNormalTexture(icons[func])
 	GameTooltip:Hide()
