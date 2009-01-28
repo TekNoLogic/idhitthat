@@ -19,12 +19,13 @@ function tek_register(icon, onenter, tip)
 end
 
 
-local tableindex, func
+local func
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, addon)
 	if addon:lower() ~= "lowavoidance" then return end
 
-	tableindex, func = 1, onenters[1]
+	lowAvoidanceDBPC = lowAvoidanceDBPC or 1
+	func = onenters[lowAvoidanceDBPC]
 
 	f:SetNormalTexture(icons[func])
 
@@ -34,14 +35,14 @@ end)
 
 
 local function changetable(self, ...)
-	tableindex = tableindex + 1;
-	if tableindex > #onenters then tableindex = 1 end
-	func = onenters[tableindex]
+	lowAvoidanceDBPC = lowAvoidanceDBPC + 1;
+	if lowAvoidanceDBPC > #onenters then lowAvoidanceDBPC = 1 end
+	func = onenters[lowAvoidanceDBPC]
 	f:SetNormalTexture(icons[func])
 	GameTooltip:Hide()
 	for tip in pairs(tips) do tip:Hide() end
 	func(self)
- end
+end
 f:SetScript("OnClick", changetable)
 f:SetScript("OnMouseWheel", changetable)
 f:SetScript("OnLeave", function() GameTooltip:Hide() for tip in pairs(tips) do tip:Hide() end end)
