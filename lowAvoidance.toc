@@ -16,3 +16,5 @@ CallbackHandler-1.0.lua
 LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 lowAvoidance.lua
+defense.lua
+spell.lua
