@@ -57,7 +57,7 @@ tek_register("Interface\\Icons\\INV_Sword_26", function(self)
 	tip:AddMultiLine(L["Glancing"], string.format("%.2f%%", glance), string.format("%.2f%%", dglance), string.format("%.2f%%", sglance), nil,nil,nil, 1,.5,0, 1,.5,0, 1,.5,0)
 
 	tip:AddLine(" ")
-	tip:AddLine("All values are vs. mobs 3 levels above the player, attacking from behind, with capped weapon skill.", 0,1,0, true)
+	tip:AddLine("All values are vs. mobs 3 levels above the player, attacking |cffccffccfrom behind|r, with capped weapon skill.", 0,1,0, true)
 
 	tip:Show()
 end, tip)
@@ -83,7 +83,7 @@ tek_register("Interface\\Icons\\INV_Hammer_01", function(self)
 	tip:AddMultiLine(L["Glancing"], string.format("%.2f%%", glance), string.format("%.2f%%", dglance), string.format("%.2f%%", sglance), nil,nil,nil, 1,.5,0, 1,.5,0, 1,.5,0)
 
 	tip:AddLine(" ")
-	tip:AddLine("All values are vs. mobs 3 levels above the player, attacking from in front, with capped weapon skill.", 0,1,0, true)
+	tip:AddLine("All values are vs. mobs 3 levels above the player, attacking |cffccffccfrom in front|r, with capped weapon skill.", 0,1,0, true)
 
 	tip:Show()
 end, tip)
