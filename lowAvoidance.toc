@@ -21,4 +21,5 @@ tektip.lua
 lowAvoidance.lua
 melee.lua
 defense.lua
+ranged.lua
 spell.lua
