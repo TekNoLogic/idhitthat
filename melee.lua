@@ -8,7 +8,7 @@ local function gettable(canglance, isdual, infront)
 	local hasHP = UnitAura("player", "Heroic Presence")
 
 	local glance = canglance and 25 or 0
-	local miss = math.max(9 + (isdual and 19 or 0) - (hasHP and 1 or 0) - GetCombatRatingBonus(CR_HIT_MELEE), 0)
+	local miss = math.max(8 + (isdual and 19 or 0) - (hasHP and 1 or 0) - GetCombatRatingBonus(CR_HIT_MELEE), 0)
 	local parry = infront and math.max(9 - GetExpertisePercent(), 0) or 0
 	local dodge = math.max(6.5 - GetExpertisePercent(), 0)
 	local block = infront and 6.5 or 0
