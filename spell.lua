@@ -12,7 +12,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	local hasHP = UnitAura("player", "Heroic Presence")
 	if hasHP then hit = hit + 1 end
 
-	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv
+	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv, af, afv, pre, prev
 
 	if class == "PRIEST" then
 		sf, _, _, _, sfv = GetTalentInfo(3,6)
@@ -36,6 +36,13 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if catv > 0 then catv = "+"..catv.."%" else catv = nil end
 	end
 
+	if class == "MAGE" then
+		af, _, _, _, afv = GetTalentInfo(1,2)
+		pre, _, _, _, prev = GetTalentInfo(3,6)
+		if afv > 0 then hit, afv = hit + afv, "+"..afv.."%" else afv = nil end
+		if prev > 0 then hit, prev = hit + prev, "+"..prev.."%" else prev = nil end
+	end
+
 	local miss = 100 - hit
 	crit = crit * hit/100
 	hit = hit - crit
@@ -50,7 +57,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,.5,0)
 
-	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv then
+	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv or afv or prev then
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then GameTooltip:AddDoubleLine(hasHP, "+1%", nil,nil,nil, 1,1,1) end
@@ -60,6 +67,8 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if iffv  then GameTooltip:AddDoubleLine(iff.."*", iffv, nil,nil,nil, 1,1,1) end
 		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
 		if catv  then GameTooltip:AddDoubleLine(cat.."\194\185", catv, nil,nil,nil, 1,1,1) end
+		if prev  then GameTooltip:AddDoubleLine(pre, prev, nil,nil,nil, 1,1,1) end
+		if afv   then GameTooltip:AddDoubleLine(af.."\194\186", afv, nil,nil,nil, 1,1,1) end
 --~ 		† ‡ º ¹ ² ³ •
 --~ 		â€ â€¡â€¢ÂºÂ¹Â²Â³
 --~ 		\226\128\160 \226\128\161 \226\128\162 \194\186 \194\185 \194\178 \194\179
@@ -68,6 +77,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
 		if supv then GameTooltip:AddLine("\194\186Affliction spells only", 0.5, 0.5, 1) end
 		if catv then GameTooltip:AddLine("\194\185Destruction spells only", 0.5, 0.5, 1) end
+		if afv  then GameTooltip:AddLine("\194\186Arcane spells only", 0.5, 0.5, 1) end
 	end
 
 	GameTooltip:AddLine(" ")
