@@ -13,7 +13,7 @@
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Hooks: CharacterFrame_OnShow
-## X-LoadOn-CharacterFrame_OnShow: LoadAddOn('lowAvoidance')
+## X-LoadOn-CharacterFrame_OnShow: LoadAddOn('idHitThat')
 
 LibStub.lua
 CallbackHandler-1.0.lua
