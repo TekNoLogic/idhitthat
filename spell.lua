@@ -47,7 +47,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		GameTooltip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then GameTooltip:AddDoubleLine(hasHP, "+1%", nil,nil,nil, 1,1,1) end
 		if misv  then GameTooltip:AddDoubleLine(mis.."*", misv, nil,nil,nil, 1,1,1) end
-		if sfv   then GameTooltip:AddDoubleLine(sf.."\226\128\160", sfv, nil,nil,nil, 1,1,1) end
+		if sfv   then GameTooltip:AddDoubleLine(sf.."\194\186", sfv, nil,nil,nil, 1,1,1) end
 		if bopv  then GameTooltip:AddDoubleLine(bop, bopv, nil,nil,nil, 1,1,1) end
 		if iffv  then GameTooltip:AddDoubleLine(iff.."*", iffv, nil,nil,nil, 1,1,1) end
 --~ 		† ‡ º ¹ ² ³ •
@@ -55,7 +55,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 --~ 		\226\128\160 \226\128\161 \226\128\162 \194\186 \194\185 \194\178 \194\179
 
 		if misv or iffv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
-		if sfv then GameTooltip:AddLine("\226\128\160Shadow spells only", 0.5, 0.5, 1) end
+		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
 	end
 
 	GameTooltip:AddLine(" ")
