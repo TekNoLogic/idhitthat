@@ -1,13 +1,15 @@
 ## Interface: 20400
 
-## Title: lowAvoidance
-## Notes: Minimal LibDataBroker-based Crushable/Critable display with Hit Table
-## Author: Lowlee
-## Version: 2.4.3.1
-## X-Email: lowlee@lowlee.info
+## Title: I'd Hit That
+## Notes: Attack tables are so fucking confusing...
+## Author: Tekkub Stoutwrithe
+## Version: Alpha
+## X-Website: http://www.tekkub.net/
+## X-Email: tekkub-wow@googlegroups.com
+## X-Credits: lowAvoidance by Lowlee
 ## X-Category: Misc
 
-## SavedVariablesPerCharacter: lowAvoidanceDBPC
+## SavedVariablesPerCharacter: idHitThatDBPC
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Hooks: CharacterFrame_OnShow
@@ -18,7 +20,7 @@ CallbackHandler-1.0.lua
 LibDataBroker-1.1\LibDataBroker-1.1.lua
 tektip.lua
 
-lowAvoidance.lua
+idHitThat.lua
 melee.lua
 defense.lua
 ranged.lua

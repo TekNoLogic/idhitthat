@@ -22,10 +22,10 @@ end
 local func
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, addon)
-	if addon:lower() ~= "lowavoidance" then return end
+	if addon:lower() ~= "idhitthat" then return end
 
-	lowAvoidanceDBPC = lowAvoidanceDBPC or 1
-	func = onenters[lowAvoidanceDBPC]
+	idHitThatDBPC = idHitThatDBPC or 1
+	func = onenters[idHitThatDBPC]
 
 	f:SetNormalTexture(icons[func])
 
@@ -36,10 +36,10 @@ end)
 
 local function changetable(self, v)
 	local diff = type(v) == "number" and v or 1
-	lowAvoidanceDBPC = lowAvoidanceDBPC + diff
-	if lowAvoidanceDBPC > #onenters then lowAvoidanceDBPC = 1 end
-	if lowAvoidanceDBPC < 1 then lowAvoidanceDBPC = #onenters end
-	func = onenters[lowAvoidanceDBPC]
+	idHitThatDBPC = idHitThatDBPC + diff
+	if idHitThatDBPC > #onenters then idHitThatDBPC = 1 end
+	if idHitThatDBPC < 1 then idHitThatDBPC = #onenters end
+	func = onenters[idHitThatDBPC]
 	f:SetNormalTexture(icons[func])
 	GameTooltip:Hide()
 	for tip in pairs(tips) do tip:Hide() end
