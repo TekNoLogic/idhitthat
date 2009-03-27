@@ -12,20 +12,20 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	local hasHP = UnitAura("player", "Heroic Presence")
 	if hasHP then hit = hit + 1 end
 
-	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv, af, afv, pre, prev, vir, virv
+	local _, sf, sfv, deb, debv, dir, dirv, sup, supv, cat, catv, af, afv
 
 	if class == "PRIEST" then
 		sf, _, _, _, sfv = GetTalentInfo(3,6)
-		mis, _, _, _, misv = GetTalentInfo(3,22)
+		deb, _, _, _, debv = GetTalentInfo(3,22)
 		if sfv > 0 then hit, sfv = hit + sfv, "+"..sfv.."%" else sfv = nil end
-		if misv > 0 then hit, misv = hit + misv, "+"..misv.."%" else misv = nil end
+		if debv > 0 then hit, debv = hit + debv, "+"..debv.."%" else debv = nil end
 	end
 
 	if class == "DRUID" then
-		bop, _, _, _, bopv = GetTalentInfo(1,17)
-		iff, _, _, _, iffv = GetTalentInfo(1,20)
-		if bopv > 0 then hit, bopv = hit + bopv*2, "+"..(bopv*2).."%" else bopv = nil end
-		if iffv > 0 then hit, iffv = hit + iffv, "+"..(iffv).."%" else iffv = nil end
+		dir, _, _, _, dirv = GetTalentInfo(1,17)
+		deb, _, _, _, debv = GetTalentInfo(1,20)
+		if dirv > 0 then hit, dirv = hit + dirv*2, "+"..(dirv*2).."%" else dirv = nil end
+		if debv > 0 then hit, debv = hit + debv, "+"..(debv).."%" else debv = nil end
 	end
 
 	if class == "WARLOCK" then
@@ -38,19 +38,19 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 
 	if class == "MAGE" then
 		af, _, _, _, afv = GetTalentInfo(1,2)
-		pre, _, _, _, prev = GetTalentInfo(3,6)
+		dir, _, _, _, dirv = GetTalentInfo(3,6)
 		if afv > 0 then hit, afv = hit + afv, "+"..afv.."%" else afv = nil end
-		if prev > 0 then hit, prev = hit + prev, "+"..prev.."%" else prev = nil end
+		if dirv > 0 then hit, dirv = hit + dirv, "+"..dirv.."%" else dirv = nil end
 	end
 
 	if class == "DEATHKNIGHT" then
-		vir, _, _, _, virv = GetTalentInfo(3,5)
-		if virv > 0 then hit, virv = hit + virv, "+"..virv.."%" else virv = nil end
+		dir, _, _, _, dirv = GetTalentInfo(3,5)
+		if dirv > 0 then hit, dirv = hit + dirv, "+"..dirv.."%" else dirv = nil end
 	end
 
 	if class == "SHAMAN" then
-		vir, _, _, _, virv = GetTalentInfo(1,14)
-		if virv > 0 then hit, virv = hit + virv, "+"..virv.."%" else virv = nil end
+		dir, _, _, _, dirv = GetTalentInfo(1,14)
+		if dirv > 0 then hit, dirv = hit + dirv, "+"..dirv.."%" else dirv = nil end
 	end
 
 	local miss = 100 - hit
@@ -67,24 +67,21 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,.5,0)
 
-	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv or afv or prev or virv then
+	if hasHP or sfv or debv or sfv or dirv or supv or catv or afv or dirv then
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then GameTooltip:AddDoubleLine(hasHP, "+1%", nil,nil,nil, 1,1,1) end
-		if misv  then GameTooltip:AddDoubleLine(mis.."*", misv, nil,nil,nil, 1,1,1) end
+		if dirv  then GameTooltip:AddDoubleLine(dir, dirv, nil,nil,nil, 1,1,1) end
+		if debv  then GameTooltip:AddDoubleLine(deb.."*", debv, nil,nil,nil, 1,1,1) end
 		if sfv   then GameTooltip:AddDoubleLine(sf.."\194\186", sfv, nil,nil,nil, 1,1,1) end
-		if bopv  then GameTooltip:AddDoubleLine(bop, bopv, nil,nil,nil, 1,1,1) end
-		if iffv  then GameTooltip:AddDoubleLine(iff.."*", iffv, nil,nil,nil, 1,1,1) end
 		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
 		if catv  then GameTooltip:AddDoubleLine(cat.."\194\185", catv, nil,nil,nil, 1,1,1) end
-		if virv  then GameTooltip:AddDoubleLine(vir, virv, nil,nil,nil, 1,1,1) end
-		if prev  then GameTooltip:AddDoubleLine(pre, prev, nil,nil,nil, 1,1,1) end
 		if afv   then GameTooltip:AddDoubleLine(af.."\194\186", afv, nil,nil,nil, 1,1,1) end
 --~ 		† ‡ º ¹ ² ³ •
 --~ 		â€ â€¡â€¢ÂºÂ¹Â²Â³
 --~ 		\226\128\160 \226\128\161 \226\128\162 \194\186 \194\185 \194\178 \194\179
 
-		if misv or iffv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
+		if debv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
 		if supv then GameTooltip:AddLine("\194\186Affliction spells only", 0.5, 0.5, 1) end
 		if catv then GameTooltip:AddLine("\194\185Destruction spells only", 0.5, 0.5, 1) end
