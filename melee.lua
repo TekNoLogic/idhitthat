@@ -21,6 +21,11 @@ local function gettable(canglance, isdual, infront)
 		if nocsv > 0 then miss = math.max(0, miss - nocsv) else nocsv = nil end
 	end
 
+	if class == "SHAMAN" and not infront then
+		nocs, _, _, _, nocsv = GetTalentInfo(2,18)
+		if nocsv > 0 then miss, nocsv = math.max(0, miss - nocsv*2), nocsv*2 else nocsv = nil end
+	end
+
 	local leftover = 100
 
 	miss = math.min(miss, leftover)

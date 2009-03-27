@@ -48,6 +48,11 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if virv > 0 then hit, virv = hit + virv, "+"..virv.."%" else virv = nil end
 	end
 
+	if class == "SHAMAN" then
+		vir, _, _, _, virv = GetTalentInfo(1,14)
+		if virv > 0 then hit, virv = hit + virv, "+"..virv.."%" else virv = nil end
+	end
+
 	local miss = 100 - hit
 	crit = crit * hit/100
 	hit = hit - crit
