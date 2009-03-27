@@ -12,7 +12,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	local hasHP = UnitAura("player", "Heroic Presence")
 	if hasHP then hit = hit + 1 end
 
-	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv
+	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv
 
 	if class == "PRIEST" then
 		sf, _, _, _, sfv = GetTalentInfo(3,6)
@@ -26,6 +26,14 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		iff, _, _, _, iffv = GetTalentInfo(1,20)
 		if bopv > 0 then hit, bopv = hit + bopv*2, "+"..(bopv*2).."%" else bopv = nil end
 		if iffv > 0 then hit, iffv = hit + iffv, "+"..(iffv).."%" else iffv = nil end
+	end
+
+	if class == "WARLOCK" then
+		sup, _, _, _, supv = GetTalentInfo(1,2)
+		cat, _, _, _, catv = GetTalentInfo(3,5)
+		if (catv+supv) > 0 then hit = hit + math.max(catv, supv) end
+		if supv > 0 then supv = "+"..supv.."%" else supv = nil end
+		if catv > 0 then catv = "+"..catv.."%" else catv = nil end
 	end
 
 	local miss = 100 - hit
@@ -42,7 +50,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,.5,0)
 
-	if hasHP or sfv or misv or sfv or bopv or iffv then
+	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv then
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then GameTooltip:AddDoubleLine(hasHP, "+1%", nil,nil,nil, 1,1,1) end
@@ -50,12 +58,16 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if sfv   then GameTooltip:AddDoubleLine(sf.."\194\186", sfv, nil,nil,nil, 1,1,1) end
 		if bopv  then GameTooltip:AddDoubleLine(bop, bopv, nil,nil,nil, 1,1,1) end
 		if iffv  then GameTooltip:AddDoubleLine(iff.."*", iffv, nil,nil,nil, 1,1,1) end
+		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
+		if catv  then GameTooltip:AddDoubleLine(cat.."\194\185", catv, nil,nil,nil, 1,1,1) end
 --~ 		† ‡ º ¹ ² ³ •
 --~ 		â€ â€¡â€¢ÂºÂ¹Â²Â³
 --~ 		\226\128\160 \226\128\161 \226\128\162 \194\186 \194\185 \194\178 \194\179
 
 		if misv or iffv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
+		if supv then GameTooltip:AddLine("\194\186Affliction spells only", 0.5, 0.5, 1) end
+		if catv then GameTooltip:AddLine("\194\185Destruction spells only", 0.5, 0.5, 1) end
 	end
 
 	GameTooltip:AddLine(" ")
