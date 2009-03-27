@@ -12,7 +12,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	local hasHP = UnitAura("player", "Heroic Presence")
 	if hasHP then hit = hit + 1 end
 
-	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv, af, afv, pre, prev
+	local _, sf, sfv, mis, misv, bop, bopv, iff, iffv, sup, supv, cat, catv, af, afv, pre, prev, vir, virv
 
 	if class == "PRIEST" then
 		sf, _, _, _, sfv = GetTalentInfo(3,6)
@@ -43,6 +43,11 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if prev > 0 then hit, prev = hit + prev, "+"..prev.."%" else prev = nil end
 	end
 
+	if class == "DEATHKNIGHT" then
+		vir, _, _, _, virv = GetTalentInfo(3,5)
+		if virv > 0 then hit, virv = hit + virv, "+"..virv.."%" else virv = nil end
+	end
+
 	local miss = 100 - hit
 	crit = crit * hit/100
 	hit = hit - crit
@@ -57,7 +62,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	GameTooltip:AddDoubleLine(L["Hit"], string.format("%.2f%%", hit), nil,nil,nil, 1,1,1)
 	GameTooltip:AddDoubleLine(L["Miss"], string.format("%.2f%%", miss), nil,nil,nil, 1,.5,0)
 
-	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv or afv or prev then
+	if hasHP or sfv or misv or sfv or bopv or iffv or supv or catv or afv or prev or virv then
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then GameTooltip:AddDoubleLine(hasHP, "+1%", nil,nil,nil, 1,1,1) end
@@ -67,6 +72,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if iffv  then GameTooltip:AddDoubleLine(iff.."*", iffv, nil,nil,nil, 1,1,1) end
 		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
 		if catv  then GameTooltip:AddDoubleLine(cat.."\194\185", catv, nil,nil,nil, 1,1,1) end
+		if virv  then GameTooltip:AddDoubleLine(vir, virv, nil,nil,nil, 1,1,1) end
 		if prev  then GameTooltip:AddDoubleLine(pre, prev, nil,nil,nil, 1,1,1) end
 		if afv   then GameTooltip:AddDoubleLine(af.."\194\186", afv, nil,nil,nil, 1,1,1) end
 --~ 		† ‡ º ¹ ² ³ •

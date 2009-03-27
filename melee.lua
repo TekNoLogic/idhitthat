@@ -15,6 +15,12 @@ local function gettable(canglance, isdual, infront)
 	local crit = GetCritChance()
 	local hit = 0
 
+	local nocs, nocsv
+	if class == "DEATHKNIGHT" and not infront then
+		nocs, _, _, _, nocsv = GetTalentInfo(2,6)
+		if nocsv > 0 then miss = math.max(0, miss - nocsv) else nocsv = nil end
+	end
+
 	local leftover = 100
 
 	miss = math.min(miss, leftover)
@@ -37,14 +43,14 @@ local function gettable(canglance, isdual, infront)
 
 	hit = leftover
 
-	return hit, crit, miss, dodge, glance, parry, block, hasHP
+	return hit, crit, miss, dodge, glance, parry, block, hasHP, nocs, nocsv
 end
 
-TEK = gettable
+
 tek_register("Interface\\Icons\\INV_Sword_26", function(self)
 	local hit, crit, miss, dodge, glance, _, _, hasHP = gettable(true)
-TEKK = hasHP
-	local dhit, dcrit, dmiss, ddodge, dglance = gettable(true, true)
+
+	local dhit, dcrit, dmiss, ddodge, dglance, _, _, _, nocs, nocsv = gettable(true, true)
 	local shit, scrit, smiss, sdodge, sglance = gettable()
 
 
@@ -59,10 +65,12 @@ TEKK = hasHP
 	tip:AddMultiLine(L["Dodge"],    string.format("%.2f%%", dodge),  string.format("%.2f%%", ddodge),  string.format("%.2f%%", sdodge),  nil,nil,nil, 1,.5,0, 1,.5,0, 1,.5,0)
 	tip:AddMultiLine(L["Glancing"], string.format("%.2f%%", glance), string.format("%.2f%%", dglance), string.format("%.2f%%", sglance), nil,nil,nil, 1,.5,0, 1,.5,0, 1,.5,0)
 
-	if hasHP then
+	if hasHP or nocsv then
 		tip:AddLine(" ")
 		tip:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then tip:AddLine(hasHP.. " |cffffffff(+1%)") end
+		if nocsv then tip:AddLine(nocs.. "* |cffffffff(+"..nocsv.."%)") end
+		if nocsv then tip:AddLine("*Dual-wield only", 0.5, 0.5, 1) end
 	end
 
 	tip:AddLine(" ")
