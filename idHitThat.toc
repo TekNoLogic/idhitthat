@@ -1,4 +1,4 @@
-## Interface: 20400
+## Interface: 30000
 
 ## Title: I'd Hit That
 ## Notes: Attack tables are so fucking confusing...
