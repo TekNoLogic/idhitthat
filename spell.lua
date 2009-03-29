@@ -77,9 +77,6 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
 		if catv  then GameTooltip:AddDoubleLine(cat.."\194\185", catv, nil,nil,nil, 1,1,1) end
 		if afv   then GameTooltip:AddDoubleLine(af.."\194\186", afv, nil,nil,nil, 1,1,1) end
---~ 		† ‡ º ¹ ² ³ •
---~ 		â€ â€¡â€¢ÂºÂ¹Â²Â³
---~ 		\226\128\160 \226\128\161 \226\128\162 \194\186 \194\185 \194\178 \194\179
 
 		if debv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
