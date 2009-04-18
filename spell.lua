@@ -30,7 +30,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 
 	if class == "WARLOCK" then
 		sup, _, _, _, supv = GetTalentInfo(1,2)
-		if supv > 0 then hit, supv = hit + supv, "+"..supv.."%" end
+		if supv > 0 then hit, supv = hit + supv, "+"..supv.."%" else supv = nil end
 	end
 
 	if class == "MAGE" then
@@ -71,7 +71,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if dirv  then GameTooltip:AddDoubleLine(dir, dirv, nil,nil,nil, 1,1,1) end
 		if debv  then GameTooltip:AddDoubleLine(deb.."*", debv, nil,nil,nil, 1,1,1) end
 		if sfv   then GameTooltip:AddDoubleLine(sf.."\194\186", sfv, nil,nil,nil, 1,1,1) end
-		if supv  then GameTooltip:AddDoubleLine(sup.."\194\186", supv, nil,nil,nil, 1,1,1) end
+		if supv  then GameTooltip:AddDoubleLine(sup, supv, nil,nil,nil, 1,1,1) end
 		if afv   then GameTooltip:AddDoubleLine(af.."\194\186", afv, nil,nil,nil, 1,1,1) end
 
 		if debv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
