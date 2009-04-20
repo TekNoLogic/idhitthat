@@ -22,7 +22,7 @@ local function gettable(canglance, isdual, infront)
 	end
 
 	if class == "SHAMAN" and not infront then
-		nocs, _, _, _, nocsv = GetTalentInfo(2,18)
+		nocs, _, _, _, nocsv = GetTalentInfo(2,19)
 		if nocsv > 0 then miss, nocsv = math.max(0, miss - nocsv*2), nocsv*2 else nocsv = nil end
 	end
 

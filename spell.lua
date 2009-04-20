@@ -41,7 +41,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	end
 
 	if class == "DEATHKNIGHT" then
-		dir, _, _, _, dirv = GetTalentInfo(3,5)
+		dir, _, _, _, dirv = GetTalentInfo(3,2)
 		if dirv > 0 then hit, dirv = hit + dirv, "+"..dirv.."%" else dirv = nil end
 	end
 
