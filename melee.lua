@@ -4,8 +4,9 @@ local tip = LibStub("tektip-1.0").new(4, "LEFT", "RIGHT", "RIGHT", "RIGHT")
 
 local _, class = UnitClass("player")
 
+local hasHP, nocs, nocsv, hotc, hotcv
 local function gettable(canglance, isdual, infront)
-	local hasHP = UnitAura("player", "Heroic Presence")
+	hasHP = UnitAura("player", "Heroic Presence")
 
 	local glance = canglance and 25 or 0
 	local miss = math.max(8 + (isdual and 19 or 0) - (hasHP and 1 or 0) - GetCombatRatingBonus(CR_HIT_MELEE), 0)
@@ -15,7 +16,6 @@ local function gettable(canglance, isdual, infront)
 	local crit = GetCritChance()
 	local hit = 0
 
-	local nocs, nocsv
 	if class == "DEATHKNIGHT" and not infront then
 		nocs, _, _, _, nocsv = GetTalentInfo(2,6)
 		if nocsv > 0 then miss = math.max(0, miss - nocsv) else nocsv = nil end
@@ -24,6 +24,11 @@ local function gettable(canglance, isdual, infront)
 	if class == "SHAMAN" and not infront then
 		nocs, _, _, _, nocsv = GetTalentInfo(2,18)
 		if nocsv > 0 then miss, nocsv = math.max(0, miss - nocsv*2), nocsv*2 else nocsv = nil end
+	end
+
+	if class == "PALADIN" then
+		hotc, _, _, _, hotcv = GetTalentInfo(3,4)
+		if hotcv > 0 then crit = crit + hotcv else hotcv = nil end
 	end
 
 	local leftover = 100
@@ -48,14 +53,14 @@ local function gettable(canglance, isdual, infront)
 
 	hit = leftover
 
-	return hit, crit, miss, dodge, glance, parry, block, hasHP, nocs, nocsv
+	return hit, crit, miss, dodge, glance, parry, block
 end
 
 
 tek_register("Interface\\Icons\\INV_Sword_26", function(self)
-	local hit, crit, miss, dodge, glance, _, _, hasHP = gettable(true)
+	local hit, crit, miss, dodge, glance = gettable(true)
 
-	local dhit, dcrit, dmiss, ddodge, dglance, _, _, _, nocs, nocsv = gettable(true, true)
+	local dhit, dcrit, dmiss, ddodge, dglance = gettable(true, true)
 	local shit, scrit, smiss, sdodge, sglance = gettable()
 
 
@@ -78,6 +83,13 @@ tek_register("Interface\\Icons\\INV_Sword_26", function(self)
 		if nocsv then tip:AddLine("*Dual-wield only", 0.5, 0.5, 1) end
 	end
 
+	if hotcv then
+		tip:AddLine(" ")
+		tip:AddLine("Crit Bonuses", 1,1,1)
+		if hotcv then tip:AddLine(hotc.. "* |cffffffff(+"..hotcv.."%)") end
+		if hotcv then tip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
+	end
+
 	tip:AddLine(" ")
 	tip:AddLine("All values are vs. mobs 3 levels above the player, attacking |cffccffccfrom behind|r, with capped weapon skill.", 0,1,0, true)
 
@@ -87,7 +99,7 @@ end, tip)
 
 local tip2 = LibStub("tektip-1.0").new(3, "LEFT", "RIGHT", "RIGHT")
 tek_register("Interface\\Icons\\INV_Hammer_01", function(self)
-	local hit, crit, miss, dodge, glance, parry, block, hasHP = gettable(true, false, true)
+	local hit, crit, miss, dodge, glance, parry, block = gettable(true, false, true)
 	local shit, scrit, smiss, sdodge, sglance, sparry, sblock = gettable(false, false, true)
 
 
@@ -108,6 +120,13 @@ tek_register("Interface\\Icons\\INV_Hammer_01", function(self)
 		tip2:AddLine(" ")
 		tip2:AddLine("Hit Bonuses", 1,1,1)
 		if hasHP then tip2:AddLine(hasHP.. " |cffffffff(+1%)") end
+	end
+
+	if hotcv then
+		tip2:AddLine(" ")
+		tip2:AddLine("Crit Bonuses", 1,1,1)
+		if hotcv then tip2:AddLine(hotc.. "* |cffffffff(+"..hotcv.."%)") end
+		if hotcv then tip2:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 	end
 
 	tip2:AddLine(" ")

@@ -12,7 +12,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 	local hasHP = UnitAura("player", "Heroic Presence")
 	if hasHP then hit = hit + 1 end
 
-	local _, sf, sfv, deb, debv, dir, dirv, sup, supv, cat,  af, afv
+	local _, sf, sfv, deb, debv, dir, dirv, sup, supv, af, afv, hotc, hotcv
 
 	if class == "PRIEST" then
 		sf, _, _, _, sfv = GetTalentInfo(3,6)
@@ -50,6 +50,11 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if dirv > 0 then hit, dirv = hit + dirv, "+"..dirv.."%" else dirv = nil end
 	end
 
+	if class == "PALADIN" then
+		hotc, _, _, _, hotcv = GetTalentInfo(3,4)
+		if hotcv > 0 then crit = crit + hotcv else hotcv = nil end
+	end
+
 	local miss = 100 - hit
 	crit = crit * hit/100
 	hit = hit - crit
@@ -77,6 +82,13 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if debv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 		if sfv then GameTooltip:AddLine("\194\186Shadow spells only", 0.5, 0.5, 1) end
 		if afv  then GameTooltip:AddLine("\194\186Arcane spells only", 0.5, 0.5, 1) end
+	end
+
+	if hotcv then
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("Crit Bonuses", 1,1,1)
+		if hotcv then GameTooltip:AddDoubleLine(hotc.."*", "+"..hotcv.."%", nil,nil,nil, 1,1,1) end
+		if hotcv then GameTooltip:AddLine("*When debuff is applied", 0.5, 0.5, 1) end
 	end
 
 	GameTooltip:AddLine(" ")
