@@ -55,7 +55,7 @@ tek_register("Interface\\Icons\\Spell_Holy_Aspiration", function(self)
 		if hotcv > 0 then crit = crit + hotcv else hotcv = nil end
 	end
 
-	local miss = 100 - hit
+	local miss = math.max(100 - hit, 0)
 	crit = crit * hit/100
 	hit = hit - crit
 
